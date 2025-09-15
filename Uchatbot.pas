@@ -18,7 +18,7 @@ type
     procedure FormShow(Sender: TObject);
   private
     const
-      API_KEY = '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';
+      API_KEY = '';
       URL_OPENAI = 'https://api.openai.com/v1/chat/completions';
     procedure AddChatMessage(SenderName, Msg: string; Color: TColor);
   public
@@ -31,7 +31,7 @@ implementation
 
 {$R *.dfm}
 
-// Adiciona mensagem no TRichEdit com cor e rolagem automática
+// Adiciona mensagem no TRichEdit com cor e rolagem automÃ¡tica
 procedure TChatbot.AddChatMessage(SenderName, Msg: string; Color: TColor);
 begin
   MemoChat.SelStart := MemoChat.GetTextLen;
@@ -51,9 +51,9 @@ var
 begin
   if Trim(EdPergunta.Text) = '' then Exit;
 
-  AddChatMessage('Você', EdPergunta.Text, clBlue);
+  AddChatMessage('VocÃª', EdPergunta.Text, clBlue);
 
-  // Monta JSON da requisição
+  // Monta JSON da requisiÃ§Ã£o
   JSONReq := TJSONObject.Create;
   MessagesArray := TJSONArray.Create;
   try
@@ -71,7 +71,7 @@ begin
     JSONReq.Free; // libera objetos corretamente
   end;
 
-  // Envia requisição HTTP
+  // Envia requisiÃ§Ã£o HTTP
   Stream := TStringStream.Create(ReqBody, TEncoding.UTF8);
   try
     HTTPClient.CustomHeaders['Authorization'] := 'Bearer ' + API_KEY;
@@ -84,7 +84,7 @@ begin
     except
       on E: Exception do
       begin
-        AddChatMessage('Bot', 'Erro na requisição HTTP: ' + E.Message, clRed);
+        AddChatMessage('Bot', 'Erro na requisiÃ§Ã£o HTTP: ' + E.Message, clRed);
         Exit;
       end;
     end;
@@ -92,7 +92,7 @@ begin
     Stream.Free;
   end;
 
-  // Lê resposta JSON
+  // LÃª resposta JSON
   JSONResp := TJSONObject.ParseJSONValue(RespContent) as TJSONObject;
   if Assigned(JSONResp) then
   try
@@ -115,7 +115,7 @@ begin
     JSONResp.Free;
   end
   else
-    AddChatMessage('Bot', 'Erro: JSON inválido', clRed);
+    AddChatMessage('Bot', 'Erro: JSON invÃ¡lido', clRed);
 
   EdPergunta.Clear;
 end;
@@ -126,3 +126,4 @@ begin
 end;
 
 end.
+
